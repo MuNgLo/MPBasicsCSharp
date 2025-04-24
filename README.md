@@ -1,4 +1,5 @@
 # MPBasicsCSharp
+[![Watch the video](https://img.youtube.com/vi/mBRIXzM2GC0/0.jpg)](https://www.youtube.com/watch?v=mBRIXzM2GC0)
 The bare minimum to get a host and client working while separating the network related things from the rest of any project.
 
 Load up project.
@@ -16,5 +17,3 @@ The goal with sharing this is more to put a working example out there for anyone
 Might work for Godot version earlier then 4.4 with no or minor changes.
 
 Godot 4.4.1 verified as working
-
-[![Watch the video](https://img.youtube.com/vi/mBRIXzM2GC0/0.jpg)](https://www.youtube.com/watch?v=mBRIXzM2GC0)

@@ -1,0 +1,153 @@
+[gd_scene load_steps=4 format=3 uid="uid://chtypl0e8wie7"]
+
+[ext_resource type="Script" uid="uid://dpg7scbhq7mbk" path="res://Scripts/UI/UIServerIP.cs" id="1_idj7w"]
+[ext_resource type="PackedScene" uid="uid://dl5mwfg5qd4wk" path="res://Scenes/Lobby.tscn" id="1_r150o"]
+[ext_resource type="Script" uid="uid://crymay44l5hdu" path="res://Scripts/UI/UIServerPort.cs" id="2_kln2b"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Control" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="GridContainer/CenterContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GridContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Probe Network Info"
+
+[node name="StartHost" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Start Host
+"
+
+[node name="StopHost" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Stop Host
+"
+
+[node name="JoinHost" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Join Host"
+
+[node name="Leave Host" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Leave Host"
+
+[node name="IPEntry" type="HFlowContainer" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("value1", "value2", "value3", "value4")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("1_idj7w")
+value1 = NodePath("SpinBox")
+value2 = NodePath("SpinBox2")
+value3 = NodePath("SpinBox3")
+value4 = NodePath("SpinBox4")
+
+[node name="Label" type="Label" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry"]
+layout_mode = 2
+text = "IP"
+
+[node name="SpinBox" type="SpinBox" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry"]
+layout_mode = 2
+max_value = 255.0
+value = 127.0
+alignment = 1
+update_on_text_changed = true
+select_all_on_focus = true
+
+[node name="SpinBox2" type="SpinBox" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry"]
+layout_mode = 2
+max_value = 255.0
+alignment = 1
+update_on_text_changed = true
+select_all_on_focus = true
+
+[node name="SpinBox3" type="SpinBox" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry"]
+layout_mode = 2
+max_value = 255.0
+alignment = 1
+update_on_text_changed = true
+select_all_on_focus = true
+
+[node name="SpinBox4" type="SpinBox" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry"]
+layout_mode = 2
+max_value = 255.0
+value = 1.0
+alignment = 1
+update_on_text_changed = true
+select_all_on_focus = true
+
+[node name="UIServerPort" type="HFlowContainer" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer" node_paths=PackedStringArray("le")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_kln2b")
+le = NodePath("LineEdit")
+
+[node name="Label" type="Label" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/UIServerPort"]
+layout_mode = 2
+text = "PORT"
+
+[node name="LineEdit" type="LineEdit" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/UIServerPort"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "2720"
+alignment = 1
+max_length = 6
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+select_all_on_focus = true
+
+[node name="Control" type="Control" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/UIServerPort"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GameLogic" parent="." node_paths=PackedStringArray("btnProbeNet", "btnHostStart", "btnHostStop", "btnHostJoin", "btnHostleave", "serverIP", "serverport") instance=ExtResource("1_r150o")]
+btnProbeNet = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/Button")
+btnHostStart = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/StartHost")
+btnHostStop = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/StopHost")
+btnHostJoin = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/JoinHost")
+btnHostleave = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/Leave Host")
+serverIP = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/IPEntry")
+serverport = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/UIServerPort")

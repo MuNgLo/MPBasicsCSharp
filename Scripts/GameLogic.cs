@@ -66,7 +66,7 @@ public partial class GameLogic : Node
         btnHostStart.Show();
         btnHostStop.Hide();
         btnHostJoin.Show();
-        btnHostleave.Show();
+        btnHostleave.Hide();
     }
 
     private void WhenHostSetupReady(object sender, EventArgs e)
@@ -92,13 +92,13 @@ public partial class GameLogic : Node
     public async void BtnProbeNetwork()
     {
         if (debug) { GD.Print($"GameLogic::BtnProbeNetwork() PRESSED"); }
-        string ipPort = await lobby.ProbeNetworkForInfo();
+        string ipPort = await lobby.ProbeNetworkForInfo(serverport.currentPort);
         serverIP.SetFromIpPort(ipPort);
     }
     public void BtnHostStart()
     {
         if (debug) { GD.Print($"GameLogic::BtnHostStart() PRESSED"); }
-        lobby.StartHost();
+        lobby.StartHost(serverport.currentPort);
     }
     public void BtnHostJoin()
     {

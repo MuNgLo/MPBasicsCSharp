@@ -43,12 +43,14 @@ theme_override_constants/margin_bottom = 8
 [node name="GridContainer" type="GridContainer" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
+[node name="ProbeNetwork" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+tooltip_text = "Runs UPNP testing in the background and outputs to console. If succesful it will set the IP bellow to the internet side IP found."
 text = "Probe Network Info"
 
 [node name="StartHost" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+tooltip_text = "Start the host"
 text = "Start Host
 "
 
@@ -59,6 +61,7 @@ text = "Stop Host
 
 [node name="JoinHost" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+tooltip_text = "Try to join a Host on the IP:Port set bellow"
 text = "Join Host"
 
 [node name="Leave Host" type="Button" parent="GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer"]
@@ -144,7 +147,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GameLogic" parent="." node_paths=PackedStringArray("btnProbeNet", "btnHostStart", "btnHostStop", "btnHostJoin", "btnHostleave", "serverIP", "serverport") instance=ExtResource("1_r150o")]
-btnProbeNet = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/Button")
+btnProbeNet = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/ProbeNetwork")
 btnHostStart = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/StartHost")
 btnHostStop = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/StopHost")
 btnHostJoin = NodePath("../GridContainer/CenterContainer/PanelContainer/MarginContainer/GridContainer/JoinHost")

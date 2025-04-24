@@ -15,7 +15,6 @@ internal partial class LobbyManager : MultiplayerSpawner
     // Running is an active host, connected is is a client instance of the lobby
     [Export] private bool debug = true;
     [Export] private LobbyEvents Events;
-    [Export] public int port = 27020;
     [Export] private int maxPlayers = 10;
 
     private LOBBYSTATE state = LOBBYSTATE.OFFLINE;
@@ -59,6 +58,9 @@ internal partial class LobbyManager : MultiplayerSpawner
     {
         if (debug) { GD.Print($"LobbyManager::OnServerDisconnected()"); }
         GetTree().GetMultiplayer().MultiplayerPeer.Close();
+        MP.MultiplayerPeer = null;
+        ClearAll();
+        state = LOBBYSTATE.OFFLINE;
         Events.RaiseServerDisconnected();
     }
     /// <summary>
@@ -98,6 +100,7 @@ internal partial class LobbyManager : MultiplayerSpawner
             MP.MultiplayerPeer = null;
             ClearAll();
             Events.RaiseHostClosed();
+            state = LOBBYSTATE.OFFLINE;
         }
     }
     /// <summary>
@@ -105,7 +108,7 @@ internal partial class LobbyManager : MultiplayerSpawner
     /// Only fails if adress is in use
     /// When succeded, raises Events.NET.RaiseGameConnectedEvent (disabled now)
     /// </summary>
-    public void StartHost()
+    public void StartHost(int currentPort)
     {
         if (state != LOBBYSTATE.OFFLINE) { return; }
         if (GetChildCount() > 0)
@@ -116,7 +119,7 @@ internal partial class LobbyManager : MultiplayerSpawner
         if (debug) { GD.Print($"LobbyManager::StartHost() Launching host..."); }
         state = LOBBYSTATE.LAUNCHING;
         localPeer = new ENetMultiplayerPeer();
-        Error err = localPeer.CreateServer(port, maxPlayers);
+        Error err = localPeer.CreateServer(currentPort, maxPlayers);
         if (err != Error.Ok)
         {
             // Is another server running?
@@ -222,9 +225,9 @@ internal partial class LobbyManager : MultiplayerSpawner
         Members = new();
     }
 
-    public async Task<string> ProbeNetworkForInfo(){
+    public async Task<string> ProbeNetworkForInfo(int currentPort){
         GD.Print($"LobbyManager::ProbeNetworkForInfo() Trying to resolve network info through UPNP");
-        string result = await TryUPNP();
+        string result = await TryUPNP(currentPort);
         GD.Print($"LobbyManager::ProbeNetworkForInfo() result -> {result}");
         return result;
     }
@@ -234,7 +237,7 @@ internal partial class LobbyManager : MultiplayerSpawner
     /// 
     /// </summary>
     /// <returns>ip:port</returns>
-    private async Task<string> TryUPNP()
+    private async Task<string> TryUPNP(int currentPort)
     {
         Upnp upnp = new();
         await Task.Run(() =>
@@ -250,9 +253,9 @@ internal partial class LobbyManager : MultiplayerSpawner
 
         await Task.Run(() =>
         {
-            if ((Upnp.UpnpResult)upnp.AddPortMapping(port) != Upnp.UpnpResult.Success)
+            if ((Upnp.UpnpResult)upnp.AddPortMapping(currentPort) != Upnp.UpnpResult.Success)
             {
-                GD.Print($"LobbyManager::TryUPNP() Failed to map Port[{port}] It might already be forwarded though");
+                GD.Print($"LobbyManager::TryUPNP() Failed to map Port[{currentPort}] It might already be forwarded though");
             }
         }
         );
@@ -262,7 +265,7 @@ internal partial class LobbyManager : MultiplayerSpawner
         {
             ipString = upnp.QueryExternalAddress();
         });
-        return $"{ipString}:{port}";
+        return $"{ipString}:{currentPort}";
     }
     #endregion
 }// EOF CLASS

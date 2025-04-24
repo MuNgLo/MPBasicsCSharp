@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl5mwfg5qd4wk"]
+
+[ext_resource type="Script" uid="uid://buf63y0ob8gnj" path="res://Scripts/GameLogic.cs" id="1_lolwk"]
+[ext_resource type="Script" uid="uid://dkthim62ad2hh" path="res://Scripts/GDLobby/LobbyManager.cs" id="2_wgubu"]
+[ext_resource type="Script" uid="uid://cseym85k4tmk8" path="res://Scripts/GDLobby/LobbyEvents.cs" id="3_wgubu"]
+
+[node name="GameLogic" type="Node" node_paths=PackedStringArray("lobby", "lobbyEvents")]
+script = ExtResource("1_lolwk")
+lobby = NodePath("LobbyManager")
+lobbyEvents = NodePath("LobbyEvents")
+
+[node name="LobbyManager" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("Events")]
+_spawnable_scenes = PackedStringArray("uid://c3kaexrryr1de")
+spawn_path = NodePath(".")
+script = ExtResource("2_wgubu")
+Events = NodePath("../LobbyEvents")
+
+[node name="LobbyEvents" type="Node" parent="."]
+script = ExtResource("3_wgubu")
+metadata/_custom_type_script = "uid://cseym85k4tmk8"
+
+[node name="PlayerManager" type="Node" parent="."]
